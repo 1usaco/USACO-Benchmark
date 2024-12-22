@@ -40,13 +40,14 @@ There are three stages for this benchmark:
 Note: `supporting_files` archive is under 2GB, but uncompressing will consume 6.1GB (after deleting the original archive).
 
 Specifically, you need to download all `supporting_files.7z.*` into the root of the repo.
-Then, create a folder named `supporting_files`, run the following to cat the files into one `supporting_files.7z` file, and unzip with 7zip. Finally, delete the original archive.
+Then, create a folder named `supporting_files`, run the following to cat the files into one `supporting_files.7z` file, and unzip with 7zip.
 ```bash
 mkdir supporting_files
 cat supporting_files.7z.* > supporting_files.7z
-7z a supporting_files.7z supporting_files
-rm supporting_files.7z
+7z x supporting_files.7z supporting_files
 ```
+
+Make sure to delete all leftover artifacts.
 
 ### 2. Generate completions from AI
 NOTE: Generating completions means generating arbitrary code! Make sure to run this in a safe environment.

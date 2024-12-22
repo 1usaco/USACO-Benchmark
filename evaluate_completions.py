@@ -2,7 +2,7 @@ import traceback
 import multiprocessing as mp
 import os
 import json
-from crawler import FileHelper
+from file_helper import FileHelper
 
 class Process(mp.Process):
     def __init__(self, *args, **kargs):
@@ -78,7 +78,7 @@ def run_tests():
                     error, traceback = process.exception
                     print(traceback)
                     append_test_case_value(problem_id, (f"{error.__class__.__name__}: {str(error)}"), test_cases)
-                elif open("output.out", "r").read() == outFile:
+                elif open("output.out", "r").read().strip() == outFile:
                     print(f"Test {i}/{total_cases} of {problem_id} passed")
                     append_test_case_value(problem_id, "PASS", test_cases)
                 else:
@@ -91,7 +91,7 @@ def run_tests():
                 print(f"Test {i}/{total_cases} of {problem_id} errored with {e.__class__.__name__}")
                 append_test_case_value(problem_id, e.__class__.__name__)
 
-        open(f"completion_results-{fileHelper.config['language']}-{fileHelper.config['model']}-hints{fileHelper.config['use_hints']}.jsonl", "a").write(json.dumps({problem_id: test_cases[problem_id]}) + "\n")
+        open(f"completion_results-{fileHelper.config['language']}-{fileHelper.config['model']}-hints{fileHelper.config['hints']}.jsonl", "a").write(json.dumps({problem_id: test_cases[problem_id]}) + "\n")
 
 if __name__ == "__main__":
     run_tests()

@@ -1,7 +1,7 @@
 import json
 import os
 import ollama
-from crawler import FileHelper
+from file_helper import FileHelper, Hints
 import time
 import shutil
 
@@ -41,9 +41,17 @@ def construct_completion_text(problem: str, language: str) -> str:
 def get_completion(problem_id: int, language: str) -> CompletionInfo:
     problem = problems[problem_id]
 
-    if fileHelper.config["use_hints"]:
+    if fileHelper.config["hints"] == Hints.openai_error_prompt:
         problem += "Here is a english-solution to the problem that might help you understand the problem better:\n"
         problem += fileHelper.solutions_contents[problem_id]
+
+    if fileHelper.config["hints"] == Hints.true:
+        problem += "Here is a english-solution to the problem that might help you understand the problem better:\n"
+        problem += fileHelper.solutions_contents[problem_id]
+    
+    if fileHelper.config["hints"] == Hints.gpt4o:
+        print("OpenAI models should be run through the dedicated `generate_completions_with_openai_solutions.py` script, utilizing OpenAI's Batch API. ")
+        exit(1)
 
     start = time.time()
 
