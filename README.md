@@ -54,7 +54,7 @@ NOTE: Generating completions means generating arbitrary code! Make sure to run t
 
 First, update `config.json` with the following format.
 ```json
-{"model": "<model_name>", "language": "python", "use_hints": false}
+{"model": "<model_name>", "language": "python", "use_hints": False}
 ```
 
 To generate completions from the AI, run the following command:
@@ -65,6 +65,8 @@ python3 generate_completions.py
 
 This will generate completions for all the problems in the problems.json file. The completions will be stored in the `completions` directory.
 Note: Each setting creates a unique completions folder. If a folder already exists when attempting to run a completion, it will overwrite that existing folder.
+
+OpenAI Batch API has support, just run `generate_completions_with_openai_solutions.py`. If you would like to use a different model service than OpenAI, like Anthropic for example. then you can write you own. Just make sure to adhere to a `completions.json` protocol of `{str<problem_id>: str<solution_text>}`. Specifically, each `problem_id` key, which are strings, are mapped to a solution text, which is also a string. The prompting and code extraction should be mapped as well. Then, be sure to update `solutions.json` parameter of `FileHelper` anywhere the solutions parameter is set to use. 
 
 ### 3. Evaluating the completions against test cases
 NOTE: Evaluating completions means running arbitrary code to verify test cases meet input and outputs. Make sure to run this in a safe environment.
